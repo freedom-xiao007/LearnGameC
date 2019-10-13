@@ -6,8 +6,14 @@
 
 int main()
 {
-    std::cout << "Hello World!\n";
-	Sokoban sokoban = Sokoban();
+    std::cout << "请输出游戏对应的编号开始游戏!\n";
+	std::cout << "1: 推箱子\n";
+
+	char input;
+	std::cin >> input;
+	if (input == '1') {
+		Sokoban sokoban = Sokoban();
+	}
 }
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单

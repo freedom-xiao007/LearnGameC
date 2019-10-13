@@ -4,6 +4,12 @@
 #include<conio.h>
 
 Sokoban::Sokoban() {
+	successCount = 0;
+	seed = time(NULL);
+	width = 30;
+	height = 15;
+	wallAmount = 10;
+
 	initArea();
 	initWalls();
 	initMan();
@@ -14,6 +20,7 @@ Sokoban::Sokoban() {
 	while (true) {
 		controller();
 		if (isOver()) {
+			std::cout << "GOOD" << std::endl;
 			break;
 		}
 	}
@@ -45,16 +52,9 @@ void Sokoban::controller() {
 		right();
 	}
 	redraw();
-	isOver();
 }
 
 void Sokoban::initArea() {
-	/*std::cout << "请输出地区的大小：宽、高\n";
-	std::cin >> width;
-	std::cin >> height;*/
-	width = 50;
-	height = 20;
-
 	area = new char* [height];
 	for (int i = 0; i < height; i++) {
 		area[i] = new char[width];
@@ -73,93 +73,74 @@ void Sokoban::initArea() {
 }
 
 void Sokoban::initMan() {
-	int seed = 1;
-	int x, y;
-	while (true) {
-		srand(seed);
-		++seed;
-		x = (rand() % (width - 1)) + 1;
-
-		srand(seed);
-		++seed;
-		y = (rand() % (height - 1)) + 1;
-
-		if (area[y][x] == '#') {
-			continue;
-		}
-		area[y][x] = '*';
-		break;
-	}
+	std::cout << "Initing man!\n";
+	int* position = createRandPosition();
+	area[*position][*(position + 1)] = '*';
 }
 
 void Sokoban::initWalls() {
-	delete walls;
-	int amount = (rand() % (width * height / 10 - 1)) + 1;
-	std::cout << "rand wall count: " << amount << "\n";
-	amount = 5;
-	int x, y;
-	for (int i = 0; i < amount; i++) {
-		for (int j = 0; j < amount; j++) {
-			srand(i);
-			x = (rand() % (width - 1)) + 1;
-
-			srand(i + j);
-			y = (rand() % (height - 1)) + 1;
-
-			//std::cout << "rand wall point: " << x << " " << y << "\n";
-			area[y][x] = '#';
-		}
+	std::cout << "Initing wall!\n";
+	int* position = NULL;
+	for (int i = 0; i < wallAmount; i++) {
+		position = createRandPosition();
+		area[*position][*(position + 1)] = '#';
 	}
 }
 
 void Sokoban::initBoxs() {
-	int seed = 1;
-	int x, y;
-	int count = 1;
-	while (true) {
-		srand(seed);
-		++seed;
-		x = (rand() % (width - 1)) + 1;
-
-		srand(seed);
-		++seed;
-		y = (rand() % (height - 1)) + 1;
-
-		if (area[y][x] == '#' || area[y][x] == '*' || area[y][x] == '$') {
-			continue;
-		}
-		area[y][x] = '$';
-		++count;
-
-		if (count > 5) {
-			break;
-		}
+	std::cout << "Initing box!\n";
+	int* position = NULL;
+	for (int i = 0; i < boxAmount; i++) {
+		position = createRandBoxPosition();
+		area[*position][*(position + 1)] = '$';
 	}
 }
 
 void Sokoban::initTargets() {
-	int seed = 1;
+	std::cout << "Initing target!\n";
+	int* position = NULL;
+	for (int i = 0; i < boxAmount; i++) {
+		position = createRandPosition();
+		area[*position][*(position + 1)] = '@';
+	}
+}
+
+int* Sokoban::createRandPosition() {
 	int x, y;
-	int count = 1;
 	while (true) {
-		srand(seed);
 		++seed;
+		srand(seed);
 		x = (rand() % (width - 1)) + 1;
 
-		srand(seed);
 		++seed;
+		srand(seed);
 		y = (rand() % (height - 1)) + 1;
 
-		if (area[y][x] == '#' || area[y][x] == '*' || area[y][x] == '$' || area[y][x] == '@') {
-			continue;
-		}
-		area[y][x] = '@';
-		++count;
-
-		if (count > 5) {
-			break;
+		if (area[y][x] == ' ') {
+			int position[2] = { y, x };
+			return position;
 		}
 	}
+	return NULL;
+}
+
+int* Sokoban::createRandBoxPosition() {
+	int x, y;
+	while (true) {
+		++seed;
+		srand(seed);
+		x = (rand() % (width - 3)) + 2;
+
+		++seed;
+		srand(seed);
+		y = (rand() % (height - 3)) + 2;
+
+		if (area[y][x] == ' ') {
+			int position[2] = { y, x };
+			return position;
+		}
+	}
+	return NULL;
 }
 
 void Sokoban::up() {
@@ -168,7 +149,7 @@ void Sokoban::up() {
 	int manNextPos[2] = { (*manCurrentPos) - 1, *(manCurrentPos + 1) };
 	//std::cout << *manCurrentPos << " " << *(manCurrentPos + 1) << std::endl;
 	//std::cout << *manNextPos << " " << *(manNextPos + 1) << std::endl;
-	if (area[manNextPos[0]][manNextPos[1]] == '$') {
+	if (area[manNextPos[0]][manNextPos[1]] == '$' || area[manNextPos[0]][manNextPos[1]] == '!') {
 		int boxNextPos[2] = { (*manNextPos) - 1, *(manNextPos + 1) };
 		move(manNextPos, boxNextPos);
 	}
@@ -181,7 +162,7 @@ void Sokoban::down() {
 	int manNextPos[2] = { (*manCurrentPos) + 1, *(manCurrentPos + 1) };
 	//std::cout << *manCurrentPos << " " << *(manCurrentPos + 1) << std::endl;
 	//std::cout << *manNextPos << " " << *(manNextPos + 1) << std::endl;
-	if (area[manNextPos[0]][manNextPos[1]] == '$') {
+	if (area[manNextPos[0]][manNextPos[1]] == '$' || area[manNextPos[0]][manNextPos[1]] == '!') {
 		int boxNextPos[2] = { (*manNextPos) + 1, *(manNextPos + 1) };
 		move(manNextPos, boxNextPos);
 	}
@@ -194,7 +175,7 @@ void Sokoban::left() {
 	int manNextPos[2] = { (*manCurrentPos), *(manCurrentPos + 1) - 1};
 	//std::cout << *manCurrentPos << " " << *(manCurrentPos + 1) << std::endl;
 	//std::cout << *manNextPos << " " << *(manNextPos + 1) << std::endl;
-	if (area[manNextPos[0]][manNextPos[1]] == '$') {
+	if (area[manNextPos[0]][manNextPos[1]] == '$' || area[manNextPos[0]][manNextPos[1]] == '!') {
 		int boxNextPos[2] = { (*manNextPos), *(manNextPos + 1) - 1};
 		move(manNextPos, boxNextPos);
 	}
@@ -207,7 +188,7 @@ void Sokoban::right() {
 	int manNextPos[2] = { (*manCurrentPos), *(manCurrentPos + 1) + 1 };
 	//std::cout << *manCurrentPos << " " << *(manCurrentPos + 1) << std::endl;
 	//std::cout << *manNextPos << " " << *(manNextPos + 1) << std::endl;
-	if (area[manNextPos[0]][manNextPos[1]] == '$') {
+	if (area[manNextPos[0]][manNextPos[1]] == '$' || area[manNextPos[0]][manNextPos[1]] == '!') {
 		int boxNextPos[2] = { (*manNextPos), *(manNextPos + 1) + 1 };
 		move(manNextPos, boxNextPos);
 	}
@@ -217,7 +198,7 @@ void Sokoban::right() {
 int* Sokoban::findMan() {
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < height; j++) {
-			if (area[j][i] == '*') {
+			if (area[j][i] == '*' || area[j][i] == 'R') {
 				int position[2];
 				position[0] = j;
 				position[1] = i;
@@ -235,16 +216,44 @@ void Sokoban::move(int* currentPos, int* nextPos) {
 	if (*(nextPos + 1) < 0 || *(nextPos + 1) >= width) {
 		return;
 	}
-	if (area[*nextPos][*(nextPos + 1)] == '#') {
+	if (area[*nextPos][*(nextPos + 1)] == '#' || area[*nextPos][*(nextPos + 1)] == '$') {
 		return;
 	}
 	//std::cout << *currentPos << " " << *(currentPos + 1) << std::endl;
 	//std::cout << *nextPos << " " << *(nextPos + 1) << std::endl;
-	char c = area[*currentPos][*(currentPos + 1)];
-	area[*currentPos][*(currentPos + 1)] = ' ';
-	area[*nextPos][*(nextPos + 1)] = c;
+	char current = area[*currentPos][*(currentPos + 1)];
+	char next = area[*nextPos][*(nextPos + 1)];
+	if (current == '$' && next == '@') {
+		area[*currentPos][*(currentPos + 1)] = ' ';
+		area[*nextPos][*(nextPos + 1)] = '!';
+		++successCount;
+	}
+	else if (current == '*' && next == '!') {
+		area[*currentPos][*(currentPos + 1)] = ' ';
+		area[*nextPos][*(nextPos + 1)] = 'R';
+	}
+	else if (current == '!' && next == ' ') {
+		area[*currentPos][*(currentPos + 1)] = '@';
+		area[*nextPos][*(nextPos + 1)] = '$';
+		--successCount;
+	}
+	else if (current == 'R' && next == ' ') {
+		area[*currentPos][*(currentPos + 1)] = '@';
+		area[*nextPos][*(nextPos + 1)] = '*';
+	}
+	else if (current == '*' && next == '@') {
+		area[*currentPos][*(currentPos + 1)] = ' ';
+		area[*nextPos][*(nextPos + 1)] = 'R';
+	}
+	else {
+		area[*currentPos][*(currentPos + 1)] = ' ';
+		area[*nextPos][*(nextPos + 1)] = current;
+	}
 }
 
 bool Sokoban::isOver() {
+	if (successCount >= boxAmount) {
+		return true;
+	}
 	return false;
 }
