@@ -152,9 +152,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="LearnGame.cpp" />
+    <ClCompile Include="Snake.cpp" />
     <ClCompile Include="Sokoban.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Snake.h" />
     <ClInclude Include="Sokoban.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

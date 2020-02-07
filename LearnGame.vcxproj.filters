@@ -21,9 +21,15 @@
     <ClCompile Include="Sokoban.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Snake.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sokoban.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Snake.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
