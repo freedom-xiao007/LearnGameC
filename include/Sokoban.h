@@ -1,4 +1,7 @@
 #pragma once
+
+#include <wincon.h>
+
 /*推箱子游戏
 简介：
 	简单的推箱子游戏，将所有箱子推到目的地即可
@@ -17,7 +20,7 @@
 class Sokoban
 {
 public:
-	Sokoban();;
+	Sokoban(void *pVoid, void *pVoid1, _COORD coord, unsigned long i);;
 	~Sokoban() {};
 
 private:

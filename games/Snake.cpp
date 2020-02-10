@@ -3,6 +3,7 @@
 #include <winnt.h>
 #include <sys/time.h>
 #include <cstdlib>
+#include <iostream>
 
 Snake::Snake(void *pVoid, void *pVoid1, _COORD coord, unsigned long bytes)
 {
@@ -19,10 +20,20 @@ Snake::Snake(void *pVoid, void *pVoid1, _COORD coord, unsigned long bytes)
     while (true) {
         if(kbhit()) {
             direction = _getch();
+            if (direction == 27) {
+                break;
+            }
         }
         if(getCurrentStamp() - stamp >= 500) {
             if(!move(direction)) {
-                break;
+                for (int i = 0; i < height; i++) {
+                    coord.Y = i;
+                    WriteConsoleOutputCharacterA(hOutBuf, data[i], width, coord, &bytes);
+                }
+                char* over = "!!!!!!GAME OVER!!!!!!";
+                WriteConsoleOutputCharacterA(hOutBuf, over, 21, coord, &bytes);
+                SetConsoleActiveScreenBuffer(hOutBuf);
+                continue;
             }
             stamp = getCurrentStamp();
         }
@@ -85,9 +96,6 @@ bool Snake::move(int action)
     }
     else if (action == 77) {
         return right();
-    }
-    else if (action == 27) {
-        return false;
     }
     return true;
 }

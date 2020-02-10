@@ -2,8 +2,12 @@
 #include<iostream>
 #include<time.h>
 #include<conio.h>
+#include <winnt.h>
 
-Sokoban::Sokoban() {
+Sokoban::Sokoban(void *pVoid, void *pVoid1, _COORD coord, unsigned long bytes) {
+    HANDLE hOutBuf = static_cast<HANDLE>(pVoid);
+    HANDLE hOutput = static_cast<HANDLE>(pVoid1);
+
 	successCount = 0;
 	seed = time(NULL);
 	width = 30;
@@ -17,6 +21,7 @@ Sokoban::Sokoban() {
 	initTargets();
 	redraw();
 
+    bool buffSelect = true;
 	while (true) {
 		if(!controller()) {
             break;
@@ -25,6 +30,25 @@ Sokoban::Sokoban() {
 			std::cout << "GOOD" << std::endl;
 			break;
 		}
+
+        if (buffSelect) {
+            for (int i = 0; i < height; i++) {
+                coord.Y = i;
+                WriteConsoleOutputCharacterA(hOutBuf, area[i], width, coord, &bytes);
+            }
+
+            SetConsoleActiveScreenBuffer(hOutBuf);
+            buffSelect = false;
+        }
+        else {
+            for (int i = 0; i < height; i++) {
+                coord.Y = i;
+                WriteConsoleOutputCharacterA(hOutput, area[i], width, coord, &bytes);
+            }
+
+            SetConsoleActiveScreenBuffer(hOutput);
+            buffSelect = true;
+        }
 	}
 
 }
@@ -57,7 +81,7 @@ bool Sokoban::controller() {
 	else if (input == 27) {
         return false;
 	}
-	redraw();
+//	redraw();
     return true;
 }
 

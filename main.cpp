@@ -43,11 +43,14 @@ int main()
 	char input;
 	std::cin >> input;
 	if (input == '1') {
-		Sokoban sokoban = Sokoban();
+		Sokoban sokoban = Sokoban(hOutput, hOutBuf, coord, bytes);
 	}
 	else if (input == '2') {
         Snake snake = Snake(hOutput, hOutBuf, coord, bytes);
 	}
+
+	system("pause");
+    return 0;
 }
 
 
