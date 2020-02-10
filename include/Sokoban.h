@@ -20,7 +20,7 @@
 class Sokoban
 {
 public:
-	Sokoban(void *pVoid, void *pVoid1, _COORD coord, unsigned long i);;
+	Sokoban(void *pVoid, void *pVoid1, _COORD coord, unsigned long i);
 	~Sokoban() {};
 
 private:

@@ -3,7 +3,6 @@
 #include <winnt.h>
 #include <sys/time.h>
 #include <cstdlib>
-#include <iostream>
 
 Snake::Snake(void *pVoid, void *pVoid1, _COORD coord, unsigned long bytes)
 {
@@ -18,12 +17,15 @@ Snake::Snake(void *pVoid, void *pVoid1, _COORD coord, unsigned long bytes)
     long long stamp = getCurrentStamp();
     bool buffSelect = true;
     while (true) {
+        // 检测按键,遇到ESC则退出游戏
         if(kbhit()) {
             direction = _getch();
             if (direction == 27) {
                 break;
             }
         }
+
+        // 设置500毫秒刷新移动一次
         if(getCurrentStamp() - stamp >= 500) {
             if(!move(direction)) {
                 for (int i = 0; i < height; i++) {
@@ -38,6 +40,7 @@ Snake::Snake(void *pVoid, void *pVoid1, _COORD coord, unsigned long bytes)
             stamp = getCurrentStamp();
         }
 
+        // 双缓冲切换绘制显示,避免闪屏
         if (buffSelect) {
             for (int i = 0; i < height; i++) {
                 coord.Y = i;

@@ -1,17 +1,24 @@
 # 游戏入门编程-C++
 ***
 ## 简介
-&ensp;&ensp;&ensp;&ensp;使用C++编写一些简单怀旧的小游戏，对编程感兴趣的，可以作为入门
+&ensp;&ensp;&ensp;&ensp;使用C++编写一些简单怀旧的小游戏,没有实现其中的玩法之类的,只实现核心功能
 
 ## 运行说明
-&ensp;&ensp;&ensp;&ensp;下载压缩包或者使用git都行，完成后使用visual studio打开即可，运行后根据提示输入相应游戏的编号，回车即可打开游戏
+*运行平台是Windows*
+
+&ensp;&ensp;&ensp;&ensp;下载压缩包或者使用git都行，完成后使用clion(其他支持cmake工程的也行,环境需要配置好,visual studio应该可以),加载工程进行运行即可
 
 ```bash
 git clone https://github.com/lw1243925457/LearnGameC.git
 ```
 
 ## 游戏目录
+- 数字雨(电影中的窗口一大堆看不懂的东西,比较酷,就简单模拟一个)
 - 推箱子
+- 贪吃蛇
+
+### 数字雨
+![sokoban](./picture/codeRain.png)
 
 ### 推箱子
 - 简介：

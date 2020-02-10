@@ -1,11 +1,13 @@
 // LearnGame.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
 //
 #include <iostream>
-#include <Sokoban.h>
-#include <Snake.h>
 #include <winnt.h>
 #include <wincon.h>
 #include <afxres.h>
+
+#include <Sokoban.h>
+#include <Snake.h>
+#include <Cool.h>
 
 HANDLE hOutput, hOutBuf;//控制台屏幕缓冲区句柄
 COORD coord = {0, 0};
@@ -37,17 +39,21 @@ int main()
 //    Snake snake = Snake(hOutput, hOutBuf, coord, bytes);
 
     std::cout << "请输出游戏对应的编号开始游戏!\n" << std::endl;
-	std::cout << "1: 推箱子\n" << std::endl;
-    std::cout << "2: 贪吃蛇\n" << std::endl;
+    std::cout << "1: 数字雨\n" << std::endl;
+	std::cout << "2: 推箱子\n" << std::endl;
+    std::cout << "3: 贪吃蛇\n" << std::endl;
 
 	char input;
 	std::cin >> input;
 	if (input == '1') {
-		Sokoban sokoban = Sokoban(hOutput, hOutBuf, coord, bytes);
+        Cool cool = Cool();
 	}
 	else if (input == '2') {
-        Snake snake = Snake(hOutput, hOutBuf, coord, bytes);
+        Sokoban sokoban = Sokoban(hOutput, hOutBuf, coord, bytes);
 	}
+    else if (input == '3') {
+        Snake snake = Snake(hOutput, hOutBuf, coord, bytes);
+    }
 
 	system("pause");
     return 0;
