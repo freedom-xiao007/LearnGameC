@@ -5,6 +5,7 @@
 #include <afxres.h>
 #include <conio.h>
 #include <deque>
+#include <cstdio>
 #include "Cool.h"
 
 Cool::Cool() {

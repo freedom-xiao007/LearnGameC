@@ -27,8 +27,14 @@ Sokoban::Sokoban(void *pVoid, void *pVoid1, _COORD coord, unsigned long bytes) {
             break;
 		}
 		if (isOver()) {
-			std::cout << "GOOD" << std::endl;
-			break;
+            for (int i = 0; i < height; i++) {
+                coord.Y = i;
+                WriteConsoleOutputCharacterA(hOutBuf, area[i], width, coord, &bytes);
+            }
+            char* over = "!!!!!!GOOD!!!!!!";
+            WriteConsoleOutputCharacterA(hOutBuf, over, 21, coord, &bytes);
+            SetConsoleActiveScreenBuffer(hOutBuf);
+            continue;
 		}
 
         if (buffSelect) {
@@ -161,11 +167,11 @@ int* Sokoban::createRandBoxPosition() {
 	while (true) {
 		++seed;
 		srand(seed);
-		x = (rand() % (width - 3)) + 2;
+		x = (rand() % (width - 4)) + 2;
 
 		++seed;
 		srand(seed);
-		y = (rand() % (height - 3)) + 2;
+		y = (rand() % (height - 4)) + 2;
 
 		if (area[y][x] == ' ') {
             int* position = new int[2];
