@@ -1,4 +1,4 @@
-#include "Sokoban.h"
+#include "../include/Sokoban.h"
 #include<iostream>
 #include<time.h>
 #include<conio.h>
@@ -18,17 +18,20 @@ Sokoban::Sokoban() {
 	redraw();
 
 	while (true) {
-		controller();
+		if(!controller()) {
+            break;
+		}
 		if (isOver()) {
 			std::cout << "GOOD" << std::endl;
 			break;
 		}
 	}
-	
+
 }
 
 void Sokoban::redraw() {
 	system("cls");
+	std:: cout << "障碍物：# 主角：* 箱子：$ 目的地：@ 箱子+目的地：! 人物+目的地: R" << std::endl;
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
 			std::cout << area[i][j];
@@ -37,7 +40,7 @@ void Sokoban::redraw() {
 	}
 }
 
-void Sokoban::controller() {
+bool Sokoban::controller() {
 	int input = _getch();
 	if (input == 72) {
 		up();
@@ -51,7 +54,11 @@ void Sokoban::controller() {
 	else if (input == 77) {
 		right();
 	}
+	else if (input == 27) {
+        return false;
+	}
 	redraw();
+    return true;
 }
 
 void Sokoban::initArea() {
@@ -117,11 +124,12 @@ int* Sokoban::createRandPosition() {
 		y = (rand() % (height - 1)) + 1;
 
 		if (area[y][x] == ' ') {
-			int position[2] = { y, x };
+			int* position = new int[2];
+			position[0] = y;
+			position[1] = x;
 			return position;
 		}
 	}
-	return NULL;
 }
 
 int* Sokoban::createRandBoxPosition() {
@@ -136,11 +144,12 @@ int* Sokoban::createRandBoxPosition() {
 		y = (rand() % (height - 3)) + 2;
 
 		if (area[y][x] == ' ') {
-			int position[2] = { y, x };
-			return position;
+            int* position = new int[2];
+            position[0] = y;
+            position[1] = x;
+            return position;
 		}
 	}
-	return NULL;
 }
 
 void Sokoban::up() {
@@ -199,7 +208,7 @@ int* Sokoban::findMan() {
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < height; j++) {
 			if (area[j][i] == '*' || area[j][i] == 'R') {
-				int position[2];
+				int* position = new int[2];
 				position[0] = j;
 				position[1] = i;
 				return position;

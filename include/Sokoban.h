@@ -19,7 +19,7 @@ class Sokoban
 public:
 	Sokoban();;
 	~Sokoban() {};
-	
+
 private:
 	int width, height; // 游戏地图的宽和高
 	int boxAmount = 5; // 游戏中箱子的数量和目的地的数量
@@ -31,7 +31,7 @@ private:
 	/*绘制游戏，打印二维数组*/
 	void redraw();
 	/*获取用户输入，控制人物移动*/
-	void controller();
+	bool controller();
 	/*初始化地图*/
 	void initArea();
 	/*随机生成人物*/

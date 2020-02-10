@@ -19,7 +19,7 @@ git clone https://github.com/lw1243925457/LearnGameC.git
 
 - 游戏符号标记：
     - 障碍物：#
-    - 任务：*
+    - 主角：*
     - 箱子：$
     - 目的地：@
     - 箱子+目的地：!
@@ -29,3 +29,18 @@ git clone https://github.com/lw1243925457/LearnGameC.git
     - 上下左右键进行移动控制
 
 ![sokoban](./picture/sokoban.gif)
+
+### 贪吃蛇
+- 简介：
+    - 贪吃蛇游戏,吃豆子变长
+
+- 游戏符号标记：
+    - 障碍物：#
+    - 蛇头：0
+    - 蛇身：o
+    - 豆子：*
+
+- 游戏控制：
+    - 上下左右键进行移动控制
+
+![sokoban](./picture/snake.png)
