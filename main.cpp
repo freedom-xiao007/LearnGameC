@@ -7,6 +7,7 @@
 
 #include <Sokoban.h>
 #include <Snake.h>
+#include <Tetris.h>
 #include <Cool.h>
 
 HANDLE hOutput, hOutBuf;//控制台屏幕缓冲区句柄
@@ -36,12 +37,11 @@ int main()
     SetConsoleCursorInfo(hOutput, &cci);
     SetConsoleCursorInfo(hOutBuf, &cci);
 
-//    Snake snake = Snake(hOutput, hOutBuf, coord, bytes);
-
     std::cout << "请输出游戏对应的编号开始游戏!\n" << std::endl;
     std::cout << "1: 数字雨\n" << std::endl;
 	std::cout << "2: 推箱子\n" << std::endl;
     std::cout << "3: 贪吃蛇\n" << std::endl;
+    std::cout << "4: 俄罗斯方块\n" << std::endl;
 
 	char input;
 	std::cin >> input;
@@ -53,6 +53,9 @@ int main()
 	}
     else if (input == '3') {
         Snake snake = Snake(hOutput, hOutBuf, coord, bytes);
+    }
+    else if (input == '4') {
+        Tetris tetris = Tetris(hOutput, hOutBuf, coord, bytes);
     }
 
 	system("pause");
