@@ -8,6 +8,9 @@ Snake::Snake(void *pVoid, void *pVoid1, _COORD coord, unsigned long bytes)
 {
     HANDLE hOutBuf = static_cast<HANDLE>(pVoid);
     HANDLE hOutput = static_cast<HANDLE>(pVoid1);
+    SMALL_RECT rc = {0, 0, 30, 15};
+    SetConsoleWindowInfo(hOutBuf, true, &rc);
+    SetConsoleWindowInfo(hOutput, true, &rc);
 
     initArea();
     createSnake();
@@ -16,6 +19,7 @@ Snake::Snake(void *pVoid, void *pVoid1, _COORD coord, unsigned long bytes)
 
     long long stamp = getCurrentStamp();
     bool buffSelect = true;
+    bool isStart = false;
     while (true) {
         // 检测按键,遇到ESC则退出游戏
         if(kbhit()) {
@@ -23,10 +27,13 @@ Snake::Snake(void *pVoid, void *pVoid1, _COORD coord, unsigned long bytes)
             if (direction == 27) {
                 break;
             }
+            if(direction == 32) {
+                isStart = true;
+            }
         }
 
         // 设置500毫秒刷新移动一次
-        if(getCurrentStamp() - stamp >= 500) {
+        if(isStart && getCurrentStamp() - stamp >= 500) {
             if(!move(direction)) {
                 for (int i = 0; i < height; i++) {
                     coord.Y = i;

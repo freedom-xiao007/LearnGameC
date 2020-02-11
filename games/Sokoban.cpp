@@ -7,6 +7,9 @@
 Sokoban::Sokoban(void *pVoid, void *pVoid1, _COORD coord, unsigned long bytes) {
     HANDLE hOutBuf = static_cast<HANDLE>(pVoid);
     HANDLE hOutput = static_cast<HANDLE>(pVoid1);
+    SMALL_RECT rc = {0, 0, 30, 15};
+    SetConsoleWindowInfo(hOutBuf, true, &rc);
+    SetConsoleWindowInfo(hOutput, true, &rc);
 
 	successCount = 0;
 	seed = time(NULL);

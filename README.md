@@ -37,7 +37,7 @@ git clone https://github.com/lw1243925457/LearnGameC.git
 - 游戏控制：
     - 上下左右键进行移动控制
 
-![sokoban](./picture/sokoban.gif)
+![sokoban](./picture/box.gif)
 
 ### 贪吃蛇
 - 简介：
@@ -51,8 +51,9 @@ git clone https://github.com/lw1243925457/LearnGameC.git
 
 - 游戏控制：
     - 上下左右键进行移动控制
+    - 空格开始游戏
 
-![sokoban](./picture/snake.png)
+![sokoban](./picture/snake.gif)
 
 ### 俄罗斯方块
 - 简介：
@@ -66,7 +67,7 @@ git clone https://github.com/lw1243925457/LearnGameC.git
     - 下左右键进行移动控制
     - 空格进行变换
 
-![sokoban](./picture/tetris.png)
+![sokoban](./picture/tetris.gif)
 
 ## 编写过程中的参考链接
 - C/C++获取系统时间戳，精确到毫秒:https://blog.csdn.net/liyunlong41/article/details/76933575
@@ -85,4 +86,3 @@ git clone https://github.com/lw1243925457/LearnGameC.git
 - 在平面中，一个点绕任意点旋转θ度后的点的坐标:https://www.cnblogs.com/fengliu-/p/10944151.html
 - 俄罗斯方块的相关算法:https://zhuanlan.zhihu.com/p/32122479
 - 如何在VC 6.0 上输出特殊符号比如一个黑色的实心方块:https://blog.csdn.net/ahuang1900/article/details/8948672
-
