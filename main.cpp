@@ -9,6 +9,7 @@
 #include <Snake.h>
 #include <Tetris.h>
 #include <Cool.h>
+#include <Shot.h>
 
 HANDLE hOutput, hOutBuf;//¿ØÖÆÌ¨ÆÁÄ»»º³åÇø¾ä±ú
 COORD coord = {0, 0};
@@ -42,6 +43,7 @@ int main()
 	std::cout << "2: ÍÆÏä×Ó\n" << std::endl;
     std::cout << "3: Ì°³ÔÉß\n" << std::endl;
     std::cout << "4: ¶íÂÞË¹·½¿é\n" << std::endl;
+    std::cout << "5: Ì«¿ÕÉä»÷\n" << std::endl;
 
 	char input;
 	std::cin >> input;
@@ -56,6 +58,9 @@ int main()
     }
     else if (input == '4') {
         Tetris tetris = Tetris(hOutput, hOutBuf, coord, bytes);
+    }
+    else if (input == '5') {
+        Shot shot = Shot(hOutput, hOutBuf, coord, bytes);
     }
 
 	system("pause");

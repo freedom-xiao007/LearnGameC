@@ -17,7 +17,7 @@ git clone https://github.com/lw1243925457/LearnGameC.git
 - 推箱子
 - 贪吃蛇
 - 俄罗斯方块(使用特殊符号容易乱码,也不好处理,就简单使用了*和#,看着有点眼花......)
-- 太空射击(未开始)
+- 太空射击(暂无死亡)
 
 ### 数字雨
 ![sokoban](./picture/codeRain.png)
@@ -68,6 +68,21 @@ git clone https://github.com/lw1243925457/LearnGameC.git
     - 空格进行变换
 
 ![sokoban](./picture/tetris.gif)
+
+### 太空射击
+- 简介：
+    - 太空射击,简单的射击类游戏
+
+- 游戏符号标记：
+    - 主角:A
+    - 子弹:I
+    - 敌机:V
+
+- 游戏控制：
+    - 下左右键进行移动控制
+    - 空格进行射击
+
+![sokoban](./picture/shot.gif)
 
 ## 编写过程中的参考链接
 - C/C++获取系统时间戳，精确到毫秒:https://blog.csdn.net/liyunlong41/article/details/76933575
